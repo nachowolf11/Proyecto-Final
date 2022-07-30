@@ -1,0 +1,56 @@
+
+:root{
+    --main-color:rgb(255, 255, 194);
+    --secondary-color: rgb(238, 238, 138);
+}
+
+html{
+    font-size: 62,5%;
+}
+
+.text-big{
+    font-size: 1.3rem;
+}
+
+.text-sm{
+    font-size: 1rem;
+}
+
+body{
+    background-color: var(--main-color);
+}
+
+header{
+    height: 50px;
+    background-color: var(--secondary-color);
+}
+
+.title{
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+#container{
+    background-color: var(--secondary-color);
+}
+
+img{
+    height: 100px;
+    width: 100px;
+}
+
+ul{
+    list-style: none;
+    margin: 0px;
+    padding: 0px;
+}
+
+li{
+    border: 1px solid grey;
+    padding: 2rem 2rem 1rem 1rem !important
+}
+
+.bi-cart{
+    font-size: 2rem;
+    color: black;
+}
