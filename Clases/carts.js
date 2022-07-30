@@ -42,15 +42,15 @@ class Carts{
             console.log(error);
         }
     }
-    deleteCart(products,id){
+    deleteCart(id){
         const carts = this.getAll()
         const newCarts = carts.filter(cart => cart.id != id)
         fs.writeFileSync(this.fileName,JSON.stringify(newCarts))
     }
     addProduct(cartID,ids){
         const carts = this.getAll()
-        const cartIndex = carts.indexOf(cart => cart.id == cartID)
-        console.log(cartIndex);
+        console.log(carts);
+        const cartIndex = carts.findIndex(cart => cart.id == cartID)
         const notProducts = []
         ids.forEach(id => {
             if (products.products.getById(id)) {

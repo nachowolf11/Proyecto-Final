@@ -23,7 +23,7 @@ router.delete('/:id',(req,res)=>{
 
 router.post('/:id/productos', (req,res)=>{
     try {
-        const ids = req.body.ids
+        const ids = req.body.id
         const cartID = req.params.id
         carts.addProduct(cartID,ids)
         res.json({dato:"VAMO CONCHETUMADRE"})
