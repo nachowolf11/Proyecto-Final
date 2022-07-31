@@ -47,9 +47,8 @@ class Carts{
         const newCarts = carts.filter(cart => cart.id != id)
         fs.writeFileSync(this.fileName,JSON.stringify(newCarts))
     }
-    addProduct(cartID,ids){
+    addProductToCart(cartID,ids){
         const carts = this.getAll()
-        console.log(carts);
         const cartIndex = carts.findIndex(cart => cart.id == cartID)
         const notProducts = []
         ids.forEach(id => {
@@ -59,6 +58,13 @@ class Carts{
                 notProducts.push(id)
             }
         })
+        fs.writeFileSync(this.fileName,JSON.stringify(carts))
+    }
+    removeProductToCart(cartID,id_prod){
+        const carts = this.getAll()
+        const cartIndex = carts.findIndex(cart => cart.id == cartID)
+        const newCart = carts[cartIndex].productos.filter(prod => prod.id != id_prod)
+        carts[cartIndex].productos = newCart
         fs.writeFileSync(this.fileName,JSON.stringify(carts))
     }
 }
