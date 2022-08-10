@@ -35,7 +35,7 @@ router.post('/:id/productos', (req,res)=>{
         const ids = req.body.id
         const cartID = req.params.id
         carts.addProductToCart(cartID,ids)
-        res.json({dato:"VAMO CONCHETUMADRE"})
+        res.json({dato:"El producto fue agregado correctamente."})
     } catch (error) {
         
     }

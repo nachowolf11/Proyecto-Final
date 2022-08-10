@@ -20,7 +20,16 @@ class Products{
             const arr = this.getAll()
             if(arr){
                 if(arr.length > 0) lastId = arr[arr.length - 1].id
-                product = {id: lastId+1, timestamp:Date.now(), name:object.name, description:object.description, code:object.code, url:object.url, price:object.price, stock:object.stock}
+                product = {
+                    id: lastId+1,
+                    timestamp:Date.now(),
+                    name:object.name,
+                    description:object.description, 
+                    code:object.code, 
+                    url:object.url, 
+                    price:object.price, 
+                    stock:object.stock
+                }
                 arr.push(product)
                 fs.writeFileSync(this.fileName,JSON.stringify(arr))
             }

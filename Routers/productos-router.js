@@ -7,7 +7,7 @@ const products = new Products('products.json')
 router.get('/', (req,res)=>{
     try {
         const data = products.getAll()
-        res.json(data)
+        res.json({data: data})
     } catch (error) {
         console.log(error);
     }
