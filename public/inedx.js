@@ -10,11 +10,11 @@ function renderNewProduct(product) {
                     <div class="text-big">${product.name}</div>
                     <div class="d-none">${product.id}</div>
                     <div class="d-none">${product.description}</div>
-                    <div class="fw-bold text-big">${product.price}</div>
+                    <div class="fw-bold text-big">$${product.price}</div>
                     <div class="d-none">${product.code}</div>
                     <div class="d-flex flex-row justify-content-between text-sm">Stock: ${product.stock}</div>
                     <div class="align-self-end mt-3">
-                        <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i class="bi bi-pencil-square"></i></button>
+                        <button class="btn btn-warning bi bi-pencil-square" data-bs-toggle="modal" data-bs-target="#staticBackdrop"></button>
                         <button class="btn btn-danger bi bi-trash deleteProd"></button>
                     </div>
                 </div>
@@ -49,3 +49,37 @@ prodContainer.addEventListener('click',(e)=>{
         fetch(`api/productos/${idProd}`,{method:'DELETE'})
     }
 })
+
+function sendFormProduct() {
+    const formProduct = document.getElementById('formProduct')
+    const formData = new FormData(formProduct)
+    const product = {
+        name:formData.get('name'),
+        description:formData.get('description'),
+        code:formData.get('code'),
+        url:formData.get('url'),
+        price:formData.get('price'),
+        stock:formData.get('stock')
+    }
+    fetch('api/productos',{
+        method:'POST',
+        headers: {"Content-Type":"application/json"},
+        body:JSON.stringify(product)
+    })
+    location.reload()
+//     var myHeaders = new Headers();
+// myHeaders.append("Content-Type", "application/json");
+
+// var raw = JSON.stringify({
+//   "name": "Salsa barbacoa"
+// });
+
+// var requestOptions = {
+//   method: 'POST',
+//   headers: myHeaders,
+//   body: raw,
+//   redirect: 'follow'
+// };
+
+// fetch("api/productos", requestOptions)
+}

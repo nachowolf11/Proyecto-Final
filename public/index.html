@@ -9,50 +9,37 @@
     <link rel="stylesheet" href="style.css">
     <title>E-Commerce</title>
 </head>
-<body class="container-fluid g-0">
+<body class="container-fluid">
     <header class="row">
-      <div class="col-1 offset-11"><a href="carrito.html"><i class="bi bi-cart"></i></a></div>
+      <div class="col-1 d-flex justify-content-center"><i class="header-icon bi bi-plus-square" data-bs-toggle="modal" data-bs-target="#addProduct"></i></div>
+      <div class="col-1 offset-10 d-flex justify-content-center"><a class="header-icon bi bi-cart" href="carrito.html"></a></div>
     </header>
     <main class="row g-0">
       <section class="col-8 offset-2">
         <div class="row g-0">
           <div class="col text-center title">Lista de Productos</div>
         </div>
-        <ul class="row g-0" id="prodContainer">
-      <li class="col">
-            <div class="row g-0">
-              <div class="col-6"><img src="https://cdn-icons-png.flaticon.com/512/68/68761.png" alt=""></div>
-              <div class="col-6 d-flex flex-column">
-                <div class="text-big">Escuadra Negra 30cm</div>
-                <div class="d-none">ID</div>
-                <div class="d-none">Descripcion</div>
-                <div class="fw-bold text-big">$2.500</div>
-                <div class="d-none">codigo</div>
-                <div class="d-flex flex-row justify-content-between text-sm">
-                  <div>Stock: 5</div>
-                  <div>02-06-2022 18:50</div>
-                </div>
-                <div class="align-self-end mt-3">
-                  <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i class="bi bi-pencil-square"></i></button>
-                  <button class="btn btn-danger bi bi-trash deleteProd"></button>
-                </div>
-              </div>
-            </div>
-          </li>
-        </ul>
-        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <ul class="row g-0" id="prodContainer"></ul>
+        <div class="modal fade" id="addProduct" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+                <h5 class="modal-title" id="staticBackdropLabel">Nuevo producto</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div class="modal-body">
-                ...
+                <form id="formProduct">
+                  <input type="text" name="name" id="name" placeholder="Nombre">
+                  <input type="text" name="description" id="description" placeholder="Descripción">
+                  <input type="text" name="code" id="code" placeholder="Código">
+                  <input type="text" name="url" id="url" placeholder="URL Imagen">
+                  <input type="text" name="price" id="price" placeholder="Precio">
+                  <input type="text" name="stock" id="stock" placeholder="Stock">
+                </form>
               </div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Understood</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" onclick="sendFormProduct()" data-bs-dismiss="modal">Aceptar</button>
               </div>
             </div>
           </div>
