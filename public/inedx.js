@@ -1,9 +1,11 @@
+let admin = true
+
 const prodContainer = document.getElementById('prodContainer')
 
 //Renderiza un producto al html
-function renderNewProduct(product) {
+async function renderNewProduct(product) {
     prodContainer.innerHTML += `
-        <li class="col-12" id="${product.id}">
+        <li class="col-12 border-bottom" id="${product.id}">
             <div class="row g-0">
                 <div class="col-6"><img src="${product.url}" alt=""></div>
                 <div class="col-6 d-flex flex-column">
@@ -13,7 +15,7 @@ function renderNewProduct(product) {
                     <div class="fw-bold text-big">$${product.price}</div>
                     <div class="d-none">${product.code}</div>
                     <div class="d-flex flex-row justify-content-between text-sm">Stock: ${product.stock}</div>
-                    <div class="align-self-end mt-3">
+                    <div class="align-self-end mt-3 admin">
                         <button class="btn btn-warning bi bi-pencil-square editProd" data-bs-toggle="modal" data-bs-target="#editProduct"></button>
                         <button class="btn btn-danger bi bi-trash deleteProd"></button>
                     </div>
@@ -21,6 +23,8 @@ function renderNewProduct(product) {
             </div>
         </li>
     `
+    //Funcion que oculta la opciones para administradores. La puse aca porque necesita ejecutarse luego de crearse el html de los prods
+    hideAdminOptions()
 }
 
 //Renderiza muchos productos
@@ -37,9 +41,10 @@ function loadProducts() {
     fetch('/api/productos')
         .then(data => data.json())
         .then(data => {renderProducts(data.data)})
+        .then(hideAdminOptions(admin))
 }
 
-loadProducts();
+
 
 //Funcion para que se elimine el producto segun el boton que toques.
 prodContainer.addEventListener('click',(e)=>{
@@ -110,3 +115,13 @@ function renderEditForm(product) {
     `
 }
 
+function hideAdminOptions() {
+    if (admin == false) {
+        const adminOptions = document.getElementsByClassName('admin')
+        for (let i = 0; i < adminOptions.length; i++) {
+            adminOptions[i].style.visibility = 'hidden'
+        }
+    }
+}
+
+loadProducts()

@@ -1,7 +1,7 @@
 
 :root{
-    --main-color:rgb(255, 255, 194);
-    --secondary-color: rgb(238, 238, 138);
+    --main-color:#ffffff;
+    --secondary-color: #fff159;;
 }
 
 html{
@@ -21,7 +21,6 @@ body{
 }
 
 header{
-    height: 50px;
     background-color: var(--secondary-color);
 }
 
@@ -46,7 +45,6 @@ ul{
 }
 
 li{
-    border: 1px solid grey;
     padding: 2rem 2rem 1rem 1rem !important
 }
 
@@ -56,4 +54,8 @@ li{
 }
 .header-icon:hover{
     color: grey;
+}
+
+.bar{
+    height: 3rem;
 }
