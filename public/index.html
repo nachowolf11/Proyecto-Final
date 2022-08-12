@@ -12,41 +12,70 @@
 <body class="container-fluid">
     <header class="row">
       <div class="col-1 d-flex justify-content-center"><i class="header-icon bi bi-plus-square" data-bs-toggle="modal" data-bs-target="#addProduct"></i></div>
-      <div class="col-1 offset-10 d-flex justify-content-center"><a class="header-icon bi bi-cart" href="carrito.html"></a></div>
+      <div class="col-1 offset-10 d-flex justify-content-center"><a class="header-icon bi bi-bag-check-fill" href="carrito.html"></a></div>
     </header>
     <main class="row g-0">
       <section class="col-8 offset-2">
         <div class="row g-0">
           <div class="col text-center title">Lista de Productos</div>
         </div>
+        <!-- Se generan los productos. -->
         <ul class="row g-0" id="prodContainer"></ul>
-        <div class="modal fade" id="addProduct" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="staticBackdropLabel">Nuevo producto</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
-              <div class="modal-body">
-                <form id="formProduct">
-                  <input type="text" name="name" id="name" placeholder="Nombre">
-                  <input type="text" name="description" id="description" placeholder="Descripción">
-                  <input type="text" name="code" id="code" placeholder="Código">
-                  <input type="text" name="url" id="url" placeholder="URL Imagen">
-                  <input type="text" name="price" id="price" placeholder="Precio">
-                  <input type="text" name="stock" id="stock" placeholder="Stock">
-                </form>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-primary" onclick="sendFormProduct()" data-bs-dismiss="modal">Aceptar</button>
-              </div>
-            </div>
-          </div>
-        </div>
       </section>
     </main>
 </body>
+
+<!-- Modal Add Product -->
+<div class="modal fade" id="addProduct" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Nuevo producto</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="formProduct">
+          <input type="text" name="name" id="name" placeholder="Nombre">
+          <input type="text" name="description" id="description" placeholder="Descripción">
+          <input type="text" name="code" id="code" placeholder="Código">
+          <input type="text" name="url" id="url" placeholder="URL Imagen">
+          <input type="number" name="price" id="price" placeholder="Precio">
+          <input type="number" name="stock" id="stock" placeholder="Stock">
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary" onclick="sendFormProduct()" data-bs-dismiss="modal">Aceptar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Edit Product -->
+<div class="modal fade" id="editProduct" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Editar producto</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="formEditProduct" idProd="">
+          <!-- <input type="text" name="name" id="name" placeholder="Nombre">
+          <input type="text" name="description" id="description" placeholder="Descripción">
+          <input type="text" name="code" id="code" placeholder="Código">
+          <input type="text" name="url" id="url" placeholder="URL Imagen">
+          <input type="text" name="price" id="price" placeholder="Precio">
+          <input type="text" name="stock" id="stock" placeholder="Stock"> -->
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary" onclick="sendFormEditProduct()" data-bs-dismiss="modal">Aceptar</button>
+      </div>
+    </div>
+  </div>
+</div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 <script src="./inedx.js"></script>
 </html>

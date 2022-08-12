@@ -14,7 +14,7 @@ function renderNewProduct(product) {
                     <div class="d-none">${product.code}</div>
                     <div class="d-flex flex-row justify-content-between text-sm">Stock: ${product.stock}</div>
                     <div class="align-self-end mt-3">
-                        <button class="btn btn-warning bi bi-pencil-square" data-bs-toggle="modal" data-bs-target="#staticBackdrop"></button>
+                        <button class="btn btn-warning bi bi-pencil-square editProd" data-bs-toggle="modal" data-bs-target="#editProduct"></button>
                         <button class="btn btn-danger bi bi-trash deleteProd"></button>
                     </div>
                 </div>
@@ -48,8 +48,15 @@ prodContainer.addEventListener('click',(e)=>{
         e.target.parentNode.parentNode.parentNode.parentNode.remove()
         fetch(`api/productos/${idProd}`,{method:'DELETE'})
     }
+    if (e.target.className.includes('editProd')) {
+        const idProd = e.target.parentNode.parentNode.parentNode.parentNode.id
+        fetch(`/api/productos/${idProd}`)
+            .then(data => data.json())
+            .then(data => renderEditForm(data.data))
+    }
 })
 
+//Añade un nuevo producto recibido desde el front.
 function sendFormProduct() {
     const formProduct = document.getElementById('formProduct')
     const formData = new FormData(formProduct)
@@ -67,19 +74,39 @@ function sendFormProduct() {
         body:JSON.stringify(product)
     })
     location.reload()
-//     var myHeaders = new Headers();
-// myHeaders.append("Content-Type", "application/json");
-
-// var raw = JSON.stringify({
-//   "name": "Salsa barbacoa"
-// });
-
-// var requestOptions = {
-//   method: 'POST',
-//   headers: myHeaders,
-//   body: raw,
-//   redirect: 'follow'
-// };
-
-// fetch("api/productos", requestOptions)
 }
+
+//Edita productos mediante informacion recibida desde el front.
+function sendFormEditProduct() {
+    const formProduct = document.getElementById('formEditProduct')
+    const formData = new FormData(formProduct)
+    const product = {
+        name:formData.get('name'),
+        description:formData.get('description'),
+        code:formData.get('code'),
+        url:formData.get('url'),
+        price:formData.get('price'),
+        stock:formData.get('stock')
+    }
+    fetch(`api/productos/${formProduct.idProd}`,{
+        method:'PUT',
+        headers: {"Content-Type":"application/json"},
+        body:JSON.stringify(product)
+    })
+    location.reload()
+}
+
+//Renderiza el formulario para editar un producto.
+function renderEditForm(product) {
+    const form = document.getElementById('formEditProduct')
+    form.idProd = product.id
+    form.innerHTML = `
+    <input type="text" name="name" id="name" placeholder="Nombre" value="${product.name}">
+    <input type="text" name="description" id="description" placeholder="Descripción" value="${product.description}">
+    <input type="text" name="code" id="code" placeholder="Código" value="${product.code}">
+    <input type="text" name="url" id="url" placeholder="URL Imagen" value="${product.url}">
+    <input type="number" name="price" id="price" placeholder="Precio" value="${product.price}">
+    <input type="number" name="stock" id="stock" placeholder="Stock" value="${product.stock}">
+    `
+}
+

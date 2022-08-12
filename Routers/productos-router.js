@@ -19,7 +19,7 @@ router.get('/:id',(req,res)=>{
         if (!product) {
             res.json({Error: "No se encontró ningún producto que contenga dicho ID."})
         } else {
-            res.json(product)
+            res.json({data:product})
         }
 
     } catch (error) {
