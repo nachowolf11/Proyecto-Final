@@ -1,6 +1,8 @@
 let idCarrito = 1
 
 loadCart(idCarrito)
+renderTotal()
+
 
 const carrito = document.getElementById('carrito')
 
@@ -54,6 +56,7 @@ carrito.addEventListener('click', async(e)=>{
 
             await fetch(`api/carritos/${idCarrito}/productos/${idProd}`,{method:'DELETE'})
             e.target.parentNode.parentNode.parentNode.parentNode.remove()
+            renderTotal()
         } catch (error) {
             console.log(error);
         }
@@ -73,4 +76,3 @@ async function renderTotal() {
     total = total.toLocaleString('en-US')
     span.innerHTML = `$${total}`
 }
-renderTotal()
