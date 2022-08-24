@@ -11,9 +11,10 @@
 </head>
 <body class="container-fluid g-0">
   <header>
-    <div class="row g-0">
+    <div class="row g-0 justify-content-between">
+      <div class="col-1 d-flex justify-content-center"><a class="header-icon bi bi-house-fill" href="index.html"></a></div>
       <div class="col-1 d-flex justify-content-center"><i class="header-icon bi bi-plus-square admin" data-bs-toggle="modal" data-bs-target="#addProduct"></i></div>
-      <div class="col-1 offset-10 d-flex justify-content-center"><a class="header-icon bi bi-bag-check-fill" href="carrito.html"></a></div>
+      <div class="col-1 d-flex justify-content-center"><a class="header-icon bi bi-bag-check-fill" href="carrito.html"></a></div>
     </div>
     <div class="row g-0">
       <div class="col text-center title">Lista de Productos</div>
@@ -28,8 +29,9 @@
         <ul class="row g-0" id="prodContainer"></ul>
       </section>
     </main>
+  <!-- Toast Add To Cart -->
+  <div id="snackbar">Agregado al carrito!</div>
 </body>
-
 <!-- Modal Add Product -->
 <div class="modal fade" id="addProduct" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -38,14 +40,15 @@
         <h5 class="modal-title" id="staticBackdropLabel">Nuevo producto</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <div class="modal-body">
-        <form id="formProduct">
-          <input type="text" name="name" id="name" placeholder="Nombre">
-          <input type="text" name="description" id="description" placeholder="Descripción">
-          <input type="text" name="code" id="code" placeholder="Código">
-          <input type="text" name="url" id="url" placeholder="URL Imagen">
-          <input type="number" name="price" id="price" placeholder="Precio">
-          <input type="number" name="stock" id="stock" placeholder="Stock">
+      <div class="container-fluid">
+        <form id="formProduct" class='row'>
+          <input class='col-10 mb-2 mt-2 offset-1' type="number" name="id" id="id" placeholder="ID"/>
+          <input class='col-10 mb-2 offset-1' type="text" name="name" id="name" placeholder="Nombre"/>
+          <input class='col-10 mb-2 offset-1' type="text" name="code" id="code" placeholder="Código"/>
+          <input class='col-10 mb-2 offset-1' type="text" name="description" id="description" placeholder="Descripción"/>
+          <input class='col-10 mb-2 offset-1' type="text" name="url" id="url" placeholder="URL Imagen"/>
+          <input class='col-10 mb-2 offset-1' type="number" name="price" id="price" placeholder="Precio"/>
+          <input class='col-10 mb-2 offset-1' type="number" name="stock" id="stock" placeholder="Stock"/>
         </form>
       </div>
       <div class="modal-footer">
@@ -81,6 +84,7 @@
     </div>
   </div>
 </div>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 <script src="./inedx.js"></script>
 </html>
