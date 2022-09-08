@@ -154,3 +154,26 @@ async function sendFormEditProduct() {
     })
     location.reload()
 }
+
+//Logout
+const btnLogout = document.getElementById('logout')
+btnLogout.onclick = async () => {
+    location.reload()
+    await fetch('logout')
+}
+
+//Obtener data del usuario
+async function getDataUser() {
+    await fetch('session')
+    .then(data => data.json())
+    .then(data => renderDataUser(data.user))
+}
+getDataUser()
+
+//Renderizar nombre del usuario
+function renderDataUser(data) {
+    console.log(data);
+    if (data) {
+    document.getElementById('userContainer').innerHTML = `Hola ${data.username} `
+    }
+}

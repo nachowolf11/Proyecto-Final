@@ -14,6 +14,8 @@
     <div class="row g-0 justify-content-between">
       <div class="col-1 d-flex justify-content-center"><a class="header-icon bi bi-house-fill" href="index.html"></a></div>
       <div class="col-1 d-flex justify-content-center"><i class="header-icon bi bi-plus-square admin" data-bs-toggle="modal" data-bs-target="#addProduct"></i></div>
+      <div class="col-1 d-flex justify-content-center"><a class="header-icon bi bi-person-fill" href="login.html"></a></div>
+      <div class="col-1 d-flex justify-content-center"><i class="header-icon bi bi-door-open-fill" id="logout"></i></div>
       <div class="col-1 d-flex justify-content-center"><a class="header-icon bi bi-bag-check-fill" href="carrito.html"></a></div>
     </div>
     <div class="row g-0">
@@ -21,9 +23,10 @@
     </div>
   </header>
     <main class="row g-0">
+      <div id="userContainer"></div>
       <section class="col">
         <div class="row g-0">
-          <div class="col shadow-sm p-3 rounded"></div>
+          <div class="col shadow-sm p-1 rounded"></div>
         </div>
         <!-- Se generan los productos. -->
         <ul class="row g-0" id="prodContainer"></ul>

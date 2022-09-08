@@ -29,8 +29,34 @@ header{
     font-weight: bold;
 }
 
+.subtitle{
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+input{
+    font-size: 1rem;
+    padding: 10px;
+}
+
+.btn-login{
+    height: 2.5rem;
+    background-color: rgb(53, 117, 255);
+    color: #fff;
+    border-radius: 5px;
+    border-style: none;
+}
+
 #container{
     background-color: var(--secondary-color);
+}
+#userContainer{
+    margin-top: 10px;
+    font-weight: 600;
+    font-size: 2rem;
+    text-align: center;
+    width: 100vw;
+    background-color: #fff1595e;
 }
 
 img{
