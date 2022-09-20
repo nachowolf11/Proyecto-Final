@@ -9,10 +9,14 @@ btnLogin.onclick= async (e)=>{
         password: formLogin.password.value
     }
     console.log(userData)
-    await fetch('login',{
+    const resultado = await fetch('login',{
         method:'POST',
         headers: {"Content-Type":"application/json"},
         body:JSON.stringify(userData)
     })
-    window.location.href="index.html"
+    if(resultado.statusText == 'Unauthorized' || resultado.statusText){
+
+    }
+    console.log(resultado.statusText);
+    // window.location.href="../productos.html"
 }

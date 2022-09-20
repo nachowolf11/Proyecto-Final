@@ -166,7 +166,7 @@ btnLogout.onclick = async () => {
 async function getDataUser() {
     await fetch('session')
     .then(data => data.json())
-    .then(data => renderDataUser(data.user))
+    .then(data => renderDataUser(data.users))
 }
 getDataUser()
 
@@ -174,6 +174,6 @@ getDataUser()
 function renderDataUser(data) {
     console.log(data);
     if (data) {
-    document.getElementById('userContainer').innerHTML = `Hola ${data.username} `
+    document.getElementById('userContainer').innerHTML = `Hola ${data.name} `
     }
 }

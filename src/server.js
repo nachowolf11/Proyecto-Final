@@ -1,6 +1,8 @@
 const express = require('express')
 const cookieParser = require('cookie-parser')
 const session = require('express-session')
+const passport = require('passport')
+const LocalStrategy = require('passport-local').Strategy
 const path = require('path')
 const app = express()
 
@@ -10,12 +12,13 @@ const carritos = require('./routes/carritos-routes')
 //Persistencia MongoDB
 const {mongoose} = require('./database')
 const MongoStore = require('connect-mongo')
+const User = require('./models/users')
 const advancedOptions = {useNewUrlParser: true, useUnifiedTopology: true}
 
 //Settings
 app.set('port', process.env.PORT || 8080)
 
-//Middlewares
+//App Middlewares
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
 app.use(cookieParser())
@@ -26,45 +29,82 @@ app.use(session({
     }),
     secret:"secret",
     resave:false,
-    saveUninitialized:true,
+    saveUninitialized:false,
     cookie:{
-        maxAge: 60000
-    }
+        maxAge: 100000,
+        httpOnly: false,
+        secure:false
+    },
+    rolling: true
 }))
+app.use(passport.initialize())
+app.use(passport.session())
+
+//Passport Config
+    //Login
+passport.use('login', new LocalStrategy(
+    (username,password,done)=>{
+        User.findOne({'username': username},(err, user)=>{
+            if(err){return done(err)}
+            if (!user) {
+                console.log('User not found');
+                return done(null,false)
+            }
+            if(user.password != password){
+                console.log('Incorrect Password');
+                return done(null,false)
+            }
+            console.log('encontrado');
+            return done(null,user)
+        })
+    }
+))
+    //Signup
+passport.use('signup', new LocalStrategy(
+    {passReqToCallback:true},
+    (req,username, password, done)=>{
+        User.findOne({'username':username},(err,user)=>{
+            if(err){console.log(err);return done(err)}
+            if(user){console.log('User exist');return done(null,false)}
+            const newUser = {username, password, name: req.body.name}
+            console.log(newUser);
+            User.create(newUser,(err,userWithId)=>{
+                if(err) return done(err)
+                return done (null,userWithId)
+            })
+        })
+    }
+))
+passport.serializeUser((user,done) => { done(null,user._id)})
+passport.deserializeUser((id, done) => { User.findById(id,done)})
+
+
+//Middlewares
+function isLogged(req,res,next) {
+    if(req.isAuthenticated()){next()}
+    else{res.sendFile(path.join(__dirname,'/public/login.html'))}
+}
 
 //Static Files
-app.use(express.static(path.join(__dirname,'/public')))
+app.use(express.static(__dirname+'/public'))
 
 //Routes
-app.use('/api/productos', productos.router)
-app.use('/api/carritos', carritos.router)
+app.use('/api/productos', isLogged, productos.router)
+app.use('/api/carritos', isLogged, carritos.router)
+
+//Signup
+app.post('/signup', passport.authenticate('signup'))
 
 //Login
-app.post('/login',(req,res)=>{
-    try {
-        const {username, password} = req.body
-        //Validación
-        // if (username !== 'pepe' || password !== 'pepepass') {
-        //     return res.send('login failed')
-        // }
-        req.session.user = {username:username}
-        req.session.admin = true
-        res.send('login success')
-    } catch (error) {
-        console.log(error);
-    }
-
-})
+app.post('/login', passport.authenticate('login'))
 
 //Logout
-app.get('/logout',(req,res)=>{
-    req.session.destroy(err=>{
-        if(err){
-            return res.json({status: 'Logout error', body:err})
-        }
-        res.send('Logout OK')
-    })
-})
+app.get('/logout',function(req, res, next) {
+    req.logout(function(err) {
+      if (err) { return next(err); }
+      res.redirect('/');
+    });
+  });
 
 //GetUserData
 app.get('/session',async (req,res)=>{
