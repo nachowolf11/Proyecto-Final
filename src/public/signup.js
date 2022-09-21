@@ -24,5 +24,4 @@ btnSignup.onclick= async (e)=>{
         headers: {"Content-Type":"application/json"},
         body:JSON.stringify(userData)
     })
-    window.location.href="../productos.html"
 }

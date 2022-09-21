@@ -14,9 +14,4 @@ btnLogin.onclick= async (e)=>{
         headers: {"Content-Type":"application/json"},
         body:JSON.stringify(userData)
     })
-    if(resultado.statusText == 'Unauthorized' || resultado.statusText){
-
-    }
-    console.log(resultado.statusText);
-    // window.location.href="../productos.html"
 }
