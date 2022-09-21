@@ -9,6 +9,7 @@ const app = express()
 
 const productos = require('./routes/productos-route')
 const carritos = require('./routes/carritos-routes')
+const users = require('./routes/users-route')
 
 //Persistencia MongoDB
 const {mongoose} = require('./database')
@@ -91,34 +92,32 @@ passport.deserializeUser((id, done) => { User.findById(id,done)})
 
 
 //Middlewares
-function isLogged(req,res,next) {
-    if(req.isAuthenticated()){next()}
-    else{res.sendFile(path.join(__dirname,'/public/login.html'))}
-}
+// function isLogged(req,res,next) {
+//     if(req.isAuthenticated()){next()}
+//     else{res.sendFile(path.join(__dirname,'/public/login.html'))}
+// }
 
 //Static Files
 app.use(express.static(__dirname+'/public'))
 
 //Routes
-app.use('/api/productos', isLogged, productos.router)
-app.use('/api/carritos', isLogged, carritos.router)
+app.use('/api/productos', productos.router)
+app.use('/api/carritos', carritos.router)
+app.use('/api/users', users.router)
 
 //Signup
 app.post('/signup', passport.authenticate('signup',{
-    successRedirect: '/productos.html',
-    failureRedirect: '/failsignup',
+    successRedirect: '/',
+    failureRedirect: '/signup',
     passReqToCallback: true
 }))
 
 //Login
 app.post('/login', passport.authenticate('login',{
-    successRedirect: '/productos.html',
-    failureRedirect: '/faillogin',
+    successRedirect: '/',
+    failureRedirect: '/login',
     passReqToCallback: true
 }))
-app.get('/faillogin',(req,res)=>{
-    res.send('Datos incorrectos')
-})
 
 //Logout
 app.get('/logout',function(req, res, next) {
@@ -128,7 +127,7 @@ app.get('/logout',function(req, res, next) {
     });
   });
 
-//GetUserData
+//GetSessionData
 app.get('/session',async (req,res)=>{
    res.send(req.session)
 })
