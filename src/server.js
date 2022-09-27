@@ -1,15 +1,27 @@
 const express = require('express')
 const cookieParser = require('cookie-parser')
 const session = require('express-session')
+require('dotenv').config()
 const bcrypt = require('bcrypt')
 const passport = require('passport')
 const LocalStrategy = require('passport-local').Strategy
 const path = require('path')
 const app = express()
 
+const parseArgs = require('minimist')
+const args = parseArgs(process.argv.slice(2))
+
+//Routes
 const productos = require('./routes/productos-route')
 const carritos = require('./routes/carritos-routes')
 const users = require('./routes/users-route')
+const info = require('./routes/info-routes')
+const random = require('./routes/random-routes')
+app.use('/api/productos', productos.router)
+app.use('/api/carritos', carritos.router)
+app.use('/api/users', users.router)
+app.use('/api/info', info.router)
+app.use('/api/random',random.router)
 
 //Persistencia MongoDB
 const {mongoose} = require('./database')
@@ -18,7 +30,7 @@ const User = require('./models/users')
 const advancedOptions = {useNewUrlParser: true, useUnifiedTopology: true}
 
 //Settings
-app.set('port', process.env.PORT || 8080)
+app.set('port', process.env.PORT || args.port || 8080)
 
 //App Middlewares
 app.use(express.json())
@@ -26,7 +38,7 @@ app.use(express.urlencoded({extended:true}))
 app.use(cookieParser())
 app.use(session({
     store: MongoStore.create({
-        mongoUrl:"mongodb://nachowolf:nachowolf@ac-d21jpuh-shard-00-00.3z8w4dp.mongodb.net:27017,ac-d21jpuh-shard-00-01.3z8w4dp.mongodb.net:27017,ac-d21jpuh-shard-00-02.3z8w4dp.mongodb.net:27017/?ssl=true&replicaSet=atlas-5c4fko-shard-0&authSource=admin&retryWrites=true&w=majority",
+        mongoUrl:process.env.MONGOSTOREURL,
         mongoOptions: advancedOptions
     }),
     secret:"secret",
@@ -100,11 +112,6 @@ passport.deserializeUser((id, done) => { User.findById(id,done)})
 //Static Files
 app.use(express.static(__dirname+'/public'))
 
-//Routes
-app.use('/api/productos', productos.router)
-app.use('/api/carritos', carritos.router)
-app.use('/api/users', users.router)
-
 //Signup
 app.post('/signup', passport.authenticate('signup',{
     successRedirect: '/',
@@ -115,7 +122,6 @@ app.post('/signup', passport.authenticate('signup',{
 //Login
 app.post('/login', passport.authenticate('login',{
     successRedirect: '/',
-    failureRedirect: '/login',
     passReqToCallback: true
 }))
 
@@ -129,7 +135,7 @@ app.get('/logout',function(req, res, next) {
 
 //GetSessionData
 app.get('/session',async (req,res)=>{
-   res.send(req.session)
+   res.send({session:req.session})
 })
 
 //Starting the server

@@ -1,6 +1,16 @@
 const isAdmin = true
 const idUser = 1
 
+let session = null
+
+//Obtener session.
+async function getSession(session) {
+    session = await fetch('/session').then(result => result.json())
+    console.log(session);
+}
+getSession()
+
+
 loadProducts()
 
 const prodContainer = document.getElementById('prodContainer')
@@ -158,17 +168,9 @@ async function sendFormEditProduct() {
 //Logout
 const btnLogout = document.getElementById('logout')
 btnLogout.onclick = async () => {
+    await fetch('/logout')
     location.reload()
-    await fetch('logout')
 }
-
-//Obtener data del usuario
-async function getDataUser() {
-    await fetch('session')
-    .then(data => data.json())
-    .then(data => renderDataUser(data.users))
-}
-getDataUser()
 
 //Renderizar nombre del usuario
 function renderDataUser(data) {

@@ -14,4 +14,5 @@ btnLogin.onclick= async (e)=>{
         headers: {"Content-Type":"application/json"},
         body:JSON.stringify(userData)
     })
+    if(resultado.status === 200){window.location.href = '/index.html'}
 }

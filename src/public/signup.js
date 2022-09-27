@@ -19,9 +19,10 @@ btnSignup.onclick= async (e)=>{
     } catch (error) {
         console.log(error);
     }
-    await fetch('login',{
+    const resultado = await fetch('login',{
         method:'POST',
         headers: {"Content-Type":"application/json"},
         body:JSON.stringify(userData)
     })
+    if(resultado.status === 200){window.location.href = '/index.html'}
 }
