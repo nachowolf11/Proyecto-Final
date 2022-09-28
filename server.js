@@ -12,11 +12,11 @@ const parseArgs = require('minimist')
 const args = parseArgs(process.argv.slice(2))
 
 //Routes
-const productos = require('./routes/productos-route')
-const carritos = require('./routes/carritos-routes')
-const users = require('./routes/users-route')
-const info = require('./routes/info-routes')
-const random = require('./routes/random-routes')
+const productos = require('./src/routes/productos-route')
+const carritos = require('./src/routes/carritos-routes')
+const users = require('./src/routes/users-route')
+const info = require('./src/routes/info-routes')
+const random = require('./src/routes/random-routes')
 app.use('/api/productos', productos.router)
 app.use('/api/carritos', carritos.router)
 app.use('/api/users', users.router)
@@ -24,9 +24,9 @@ app.use('/api/info', info.router)
 app.use('/api/random',random.router)
 
 //Persistencia MongoDB
-const {mongoose} = require('./database')
+const {mongoose} = require('./src/database')
 const MongoStore = require('connect-mongo')
-const User = require('./models/users')
+const User = require('./src/models/users')
 const advancedOptions = {useNewUrlParser: true, useUnifiedTopology: true}
 
 //Settings
